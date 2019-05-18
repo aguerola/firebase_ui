@@ -8,3 +8,5 @@ build/
 ios/.generated/
 packages
 pubspec.lock
+lib/generated/i18n.dart
+res/values/strings_en.arb
