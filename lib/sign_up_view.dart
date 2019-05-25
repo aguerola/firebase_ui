@@ -143,10 +143,10 @@ class _SignUpViewState extends State<SignUpView> {
         await user.updateProfile(userUpdateInfo);
         Navigator.pop(context, true);
       } catch (e) {
-        showErrorDialog(context, e.details);
+        showErrorDialog(context, e?.details ?? e);
       }
     } on PlatformException catch (e) {
-      print(e.details);
+      print(e?.details ?? e);
       //TODO improve errors catching
       String msg = FFULocalizations.of(context).passwordLengthMessage;
       showErrorDialog(context, msg);
