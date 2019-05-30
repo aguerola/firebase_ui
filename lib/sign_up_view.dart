@@ -143,12 +143,20 @@ class _SignUpViewState extends State<SignUpView> {
         await user.updateProfile(userUpdateInfo);
         Navigator.pop(context, true);
       } catch (e) {
-        showErrorDialog(context, e?.details ?? e);
+        showErrorDialog(context, e?.toString());
       }
     } on PlatformException catch (e) {
-      print(e?.details ?? e);
+      print("PlatformException Firebase UI: " + (e.toString() ?? ""));
+      print("PlatformException Firebase UI: code:" + (e?.code ?? ""));
       //TODO improve errors catching
-      String msg = FFULocalizations.of(context).passwordLengthMessage;
+      String msg;
+      if(e.code == "ERROR_WEAK_PASSWORD"){
+        msg = FFULocalizations.of(context).passwordLengthMessage;
+      } else if(e.code == "error" && e.message == "Given String is empty or null"){
+        msg = FFULocalizations.of(context).passwordLengthMessage;
+      } else {
+        msg = "${FFULocalizations.of(context).errorOccurred} (${e.code}, ${e.details ?? ""})";
+      }
       showErrorDialog(context, msg);
     }
   }

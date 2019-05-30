@@ -110,7 +110,7 @@ Future<Null> showErrorDialog(BuildContext context, String message,
     {String title}) {
   return showDialog<Null>(
     context: context,
-    barrierDismissible: false, // user must tap button!
+    barrierDismissible: true, // user must tap button!
     builder: (BuildContext context) => new AlertDialog(
           title: title != null ? new Text(title) : null,
           content: new SingleChildScrollView(
