@@ -124,10 +124,16 @@ class _SignUpViewState extends State<SignUpView> {
     _connexion(context);
   }
 
+  bool connecting = false;
   _connexion(BuildContext context) async {
+    if(connecting){
+      return;
+    }
+    connecting = true;
     if (widget.passwordCheck &&
         _controllerPassword.text != _controllerCheckPassword.text) {
       showErrorDialog(context, FFULocalizations.of(context).passwordCheckError);
+      connecting = false;
       return;
     }
 
@@ -147,7 +153,6 @@ class _SignUpViewState extends State<SignUpView> {
       }
     } on PlatformException catch (e) {
       print("PlatformException Firebase UI: " + (e.toString() ?? ""));
-      print("PlatformException Firebase UI: code:" + (e?.code ?? ""));
       //TODO improve errors catching
       String msg;
       if(e.code == "ERROR_WEAK_PASSWORD"){
@@ -159,6 +164,7 @@ class _SignUpViewState extends State<SignUpView> {
       }
       showErrorDialog(context, msg);
     }
+    connecting = false;
   }
 
   void _checkValid(String value) {
